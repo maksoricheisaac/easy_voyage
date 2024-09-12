@@ -1,0 +1,195 @@
+"use client"
+import { Button } from "../ui/button"
+import { ArrowLeftToLine, MenuIcon } from "lucide-react";
+import { FaBell } from "react-icons/fa";
+import { BiMessage } from "react-icons/bi";
+
+
+type Props = {
+    onClick: () => void
+    isOpen: boolean
+}
+
+export const Topbar = ({onClick, isOpen}: Props) => {
+    
+    return (
+        <header className={isOpen ? "flex items-center justify-between py-4 px-7 bg-white w-[100% - 250px] shadow-md": "flex items-center justify-between py-4 px-7 bg-white w-screen shadow-md"}>
+            <Button onClick={onClick}>
+                {
+                    isOpen 
+                    ? <> <ArrowLeftToLine />  </> 
+                    :  <> <MenuIcon/>  </> 
+                }
+            </Button>
+            <div className="flex items-center gap-2">
+                <Button className="flex max-md:hidden bg-secondary p-3 rounded-full relative ">
+                    <div className="absolute  top-1 right-1 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <FaBell className="h-5 w-5 text-primary" />
+                </Button>
+                <Button className="flex max-md:hidden bg-secondary p-3 rounded-full relative ">
+                    <div className="absolute  top-1 right-1 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <BiMessage className="h-5 w-5 text-primary" />
+                </Button>
+                <div className="bg-slate-400 h-10 w-10 rounded-full"></div>
+                <div>
+                    <p>Jhon Doe</p>
+                    <p className="text-xs">Utilisateur</p>
+                </div>
+            </div>
+        </header>
+    )
+   
+    // if(!isOpen) {
+    //     return (
+    //         <header className="flex items-center justify-between py-4 px-7 bg-white w-full">
+    //             <Button onClick={onClick}>Menu</Button>
+    //             <div className="flex items-center gap-3">
+    //                 <div className="bg-slate-400 h-10 w-10 rounded-full"></div>
+    //                 <div>
+    //                     <p>Jhon Doe</p>
+    //                     <p className="text-xs">Utilisateur</p>
+    //                 </div>
+    //             </div>
+    //         </header>
+    //     )
+    // } else {
+    //     return (
+    //         <header className="flex items-center justify-end py-4 px-7 bg-white w-full">
+    //             <div className="flex items-center gap-3">
+    //                 <div className="bg-slate-400 h-10 w-10 rounded-full"></div>
+    //                 <div>
+    //                     <p>Jhon Doe</p>
+    //                     <p className="text-xs">Utilisateur</p>
+    //                 </div>
+    //             </div>
+    //         </header>
+    //     )
+    // }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+"use client"
+import { Button } from "../ui/button"
+import { ArrowLeftToLine, MenuIcon } from "lucide-react";
+import { FaBell } from "react-icons/fa";
+import { BiMessage } from "react-icons/bi";
+
+
+type Props = {
+    onClick: () => void
+    isOpen: boolean
+}
+
+export const Topbar = ({onClick, isOpen}: Props) => {
+    
+    return (
+        <header className={isOpen ? "flex items-center justify-between py-4 px-7 bg-white w-[100% - 250px] shadow-md": "flex items-center justify-between py-4 px-7 bg-white w-screen shadow-md"}>
+            <Button onClick={onClick}>
+                {
+                    isOpen 
+                    ? <> <ArrowLeftToLine />  </> 
+                    :  <> <MenuIcon/>  </> 
+                }
+            </Button>
+            <div className="flex items-center gap-2">
+                <Button className="flex max-md:hidden bg-secondary p-3 rounded-full relative ">
+                    <div className="absolute  top-1 right-1 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <FaBell className="h-5 w-5 text-primary" />
+                </Button>
+                <Button className="flex max-md:hidden bg-secondary p-3 rounded-full relative ">
+                    <div className="absolute  top-1 right-1 w-2 h-2 bg-red-600 rounded-full"></div>
+                    <BiMessage className="h-5 w-5 text-primary" />
+                </Button>
+                <div className="bg-slate-400 h-10 w-10 rounded-full"></div>
+                <div>
+                    <p>Jhon Doe</p>
+                    <p className="text-xs">Utilisateur</p>
+                </div>
+            </div>
+        </header>
+    )
+   
+    // if(!isOpen) {
+    //     return (
+    //         <header className="flex items-center justify-between py-4 px-7 bg-white w-full">
+    //             <Button onClick={onClick}>Menu</Button>
+    //             <div className="flex items-center gap-3">
+    //                 <div className="bg-slate-400 h-10 w-10 rounded-full"></div>
+    //                 <div>
+    //                     <p>Jhon Doe</p>
+    //                     <p className="text-xs">Utilisateur</p>
+    //                 </div>
+    //             </div>
+    //         </header>
+    //     )
+    // } else {
+    //     return (
+    //         <header className="flex items-center justify-end py-4 px-7 bg-white w-full">
+    //             <div className="flex items-center gap-3">
+    //                 <div className="bg-slate-400 h-10 w-10 rounded-full"></div>
+    //                 <div>
+    //                     <p>Jhon Doe</p>
+    //                     <p className="text-xs">Utilisateur</p>
+    //                 </div>
+    //             </div>
+    //         </header>
+    //     )
+    // }
+    
+}
+
+
+
+
+
+"use client"
+import { ReactNode,  useEffect, useState } from "react"
+import { Topbar } from "./Topbar"
+import { Sidebar } from "./Sidebar"
+
+
+type Props = {
+    children: ReactNode,
+}
+
+export const Dashboard = ({children}: Props) => {
+    const [isOpen, setIsOpen] = useState(true)
+    // const screen = window.screen
+    // useEffect(() => {
+    //     if(screen.width < 700){
+    //         setIsOpen(false)
+    //     }
+    // },[screen])
+
+
+    const showMenu = () => {
+        setIsOpen((v) => !v)
+    }
+
+    return (
+        <div className="w-full h-screen bg-secondary overflow-x-hidden">
+           <div className="flex relative ">
+               <div className={!isOpen ? ' relative -left-96 duration-700 transition-all ease-in-out h-screen': 'w-[250px] h-screen left-0 duration-700 ease-in-out'}>
+                    <Sidebar onClick={showMenu} isOpen={isOpen}  />
+               </div>
+                <div className={!isOpen ? "": "w-screen"}>
+                    <Topbar onClick={showMenu} isOpen={isOpen} />
+                    <main>
+                        {children}
+                    </main>
+                </div>
+           </div>
+        </div>
+        
+    )
+}

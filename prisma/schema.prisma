@@ -1,0 +1,139 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER 
+  AGENCY_ADMIN
+  SUPER_ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum TicketStatus {
+  PENDING
+  RESERVED
+  CANCELLED
+}
+
+model AgencyAdmin {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  address        String          @unique
+  phone          String?         @unique
+  email          String?         @unique
+
+  Agency Agency[]
+}
+
+model Agency {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  address        String?          @unique
+  phone          String?         @unique
+  email          String         @unique
+  logoUrl        String?         
+  trips         Trip[]
+  booking   Booking[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  Ticket         Ticket[]
+  agencyAdmins   AgencyAdmin[]
+}
+
+
+model Trip {
+  id             String       @id @default(uuid())
+  agencyId       String
+  departure      String
+  arrival        String
+  departureTime  String
+  arrivalTime    String
+  adult_price    Int
+  child_price    Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?     @updatedAt
+
+  Agency Agency[]
+
+  Ticket Ticket[]
+
+  Booking Booking[]
+}
+
+model Ticket {
+  id             String          @id @default(uuid())
+  userId         String
+  bookingId      String       @unique
+  tripId         String       @unique
+  agencyId       String
+  name           String?
+  surname        String?
+  phoneNumber    String?
+  status         TicketStatus @default(PENDING)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  user           User         @relation(fields: [userId], references: [id])
+  booking        Booking      @relation(fields: [bookingId], references: [id])
+  trip           Trip        @relation(fields: [tripId], references: [id])
+  agency         Agency       @relation(fields: [agencyId], references: [id]) 
+}
+
+model Booking {
+  id             String          @id @default(uuid())
+  userId         String
+  agencyId       String
+  tripId        String
+  status         BookingStatus @default(PENDING)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  user           User         @relation(fields: [userId], references: [id])
+  trip           Trip        @relation(fields: [tripId], references: [id])
+  agency         Agency       @relation(fields: [agencyId], references: [id]) 
+  
+
+  Ticket Ticket[]
+}
+
+
+
+model User {
+  id             String          @id @default(uuid())
+  email          String          @unique
+  password       String
+  lastname       String?
+  firstname      String?
+  phoneNumber    String?
+  role           Role           @default(USER)
+  bookings       Booking[]
+  tickets        Ticket[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Message {
+  id                  String          @id @default(uuid())
+  firstname           String
+  lastname            String
+  email               String
+  phone               String
+  message             String          @db.Text
+  sendedAt            DateTime?       @default(now())
+}
